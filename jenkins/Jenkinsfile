@@ -2,26 +2,20 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven 3.9.7'
-        jdk 'OpenJDK 22'
+        maven 'local_maven'
     }
 
-    triggers {
-        githubPush()
-    }
-
-    stages {
+    stages{
         stage('Build') {
             steps {
                 sh 'mvn clean package'
             }
-        }
-    }
-
-    post {
-        always {
-            echo 'Cleaning up workspace...'
-            cleanWs()
+            post {
+                success {
+                    echo '开始存档....'
+                    archiveArtifacts artifacts: '**/target/*.war'
+                }
+            }
         }
     }
 }
