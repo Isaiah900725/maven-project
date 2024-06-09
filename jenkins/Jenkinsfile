@@ -1,27 +1,11 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven 3.9.7'
-        jdk 'OpenJDK 22'
-    }
-
-    triggers {
-        githubPush()
-    }
-
     stages {
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                echo "hello"
             }
-        }
-    }
-
-    post {
-        always {
-            echo 'Cleaning up workspace...'
-            cleanWs()
         }
     }
 }
